@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "target": "es5",
+    "jsx": "react",
+    "allowSyntheticDefaultImports": true
+  },
+  "include": [
+    "./app/**/*"
+  ],
+  "files": [
+    "definitions/react-router-redux/index.d.ts"
+  ]
+}

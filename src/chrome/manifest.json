@@ -1,0 +1,16 @@
+{
+  "manifest_version": 2,
+  "name": "react-perf-devtool",
+  "version": "0.0.1",
+  "description": "react performance dev extension",
+  "page_action": {
+    "default_icon": "img/r.png",
+    "default_title": "Redux DevTools",
+    "default_popup": "window.html"
+  },
+  "icons": {
+    "16": "img/r.png",
+    "48": "img/r.png",
+    "128": "img/r.png"
+  }
+}
