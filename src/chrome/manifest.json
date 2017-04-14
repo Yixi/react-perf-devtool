@@ -12,5 +12,11 @@
     "16": "img/r.png",
     "48": "img/r.png",
     "128": "img/r.png"
+  },
+  "background": {
+    "scripts": [
+      "js/background.bundle.js"
+    ],
+    "persistent": false
   }
 }
