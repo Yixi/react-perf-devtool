@@ -1,12 +1,9 @@
 let gulp = require('gulp');
+let gutil = require('gulp-util');
 let rename = require('gulp-rename');
-let ts = require('gulp-typescript');
-let merge = require('merge2');
 let clean = require('gulp-clean');
-
-let tsProject = ts.createProject('./tsconfig.json');
-
-console.log(tsProject.target)
+let webpack = require('webpack');
+let webpackDevConfig = require('./webpack.dev');
 
 gulp.task('copy:dev', () => {
     gulp.src('./src/chrome/manifest.json')
@@ -31,26 +28,27 @@ gulp.task('static:watch', () => {
     gulp.watch(['./src/assets/**/*', './src/chrome/manifest.json'], ['copy:dev', 'copy:assets']);
 });
 
-gulp.task('ts', () => {
-    let backgorund = gulp.src('./src/chrome/background/index.ts').pipe(tsProject());
-
-    return merge([
-        backgorund.js
-            .pipe((rename('background.bundle.js')))
-            .pipe(gulp.dest('./dev/js'))
-    ]);
-
+gulp.task('webpack:dev', () => {
+    webpack(webpackDevConfig, (err, stats) => {
+        if(err) throw new gutil.PluginError("webpack", err);
+        gutil.log("[webpack]", stats.toString({
+            colors: true,
+            cached: true,
+            chunkModules: false
+        }));
+    });
 });
 
-
-gulp.task('watch:ts', ['ts'], function() {
-    gulp.watch('./src/**/*.ts', ['ts']);
+gulp.task("build:dev", ["webpack:dev"], function() {
+    gulp.watch(["src/**/*.ts"], ["webpack:dev"]);
 });
 
 gulp.task('clean:build', () => {
-    gulp.src('./dev/**/*').pipe(clean());
+    return gulp.src('./dev').pipe(clean());
 });
 
 gulp.task('copy:chrome', ['copy:dev', 'copy:view', 'copy:assets']);
 
-gulp.task('default', ['clean:build' ,'copy:chrome', 'view:watch', 'watch:ts']);
+gulp.task('default', ['clean:build'], () => {
+    gulp.run(['copy:chrome', 'view:watch', 'webpack:dev']);
+});
