@@ -1,15 +1,28 @@
-import {MESSAGE_TYPE} from "../../app/constant";
+import {MESSAGE, MESSAGE_TYPE} from "../../app/constant";
+
 let Perf = (window as any)['reactPerfDevtool'];
 
-console.log('Pef.start');
-Perf.start();
-
-setTimeout(() => {
-    console.log('perf.stop');
-    Perf.stop();
+if (!Perf) {
     window.postMessage({
         type: MESSAGE_TYPE.FROM_PAGE,
-        payload: Perf.getLastMeasurements()
+        payload: {
+            message: MESSAGE.NON_PERF
+        }
     }, "*");
 
-}, 10 * 1000);
+} else {
+
+//     console.log('Pef.start');
+//     Perf.start();
+//
+//     setTimeout(() => {
+//         console.log('perf.stop');
+//         Perf.stop();
+//         window.postMessage({
+//             type: MESSAGE_TYPE.FROM_PAGE,
+//             payload: Perf.getLastMeasurements()
+//         }, "*");
+//
+//     }, 10 * 1000);
+
+}

@@ -2,6 +2,8 @@
  * Created by yhliu on 14/04/2017.
  */
 
-import test from './test';
+import createMenu from './createMenu';
 
-console.log(test);
+chrome.runtime.onInstalled.addListener(() => {
+    createMenu();
+});

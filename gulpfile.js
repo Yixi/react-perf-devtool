@@ -28,7 +28,7 @@ gulp.task('static:watch', () => {
     gulp.watch(['./src/assets/**/*', './src/chrome/manifest.json'], ['copy:dev', 'copy:assets']);
 });
 
-gulp.task('webpack:dev', () => {
+gulp.task('webpack:dev', callback => {
     webpack(webpackDevConfig, (err, stats) => {
         if(err) throw new gutil.PluginError("webpack", err);
         gutil.log("[webpack]", stats.toString({
@@ -37,6 +37,7 @@ gulp.task('webpack:dev', () => {
             chunkModules: false
         }));
     });
+    callback();
 });
 
 gulp.task("build:dev", ["webpack:dev"], function() {

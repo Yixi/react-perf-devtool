@@ -10,6 +10,7 @@ module.exports = {
         content: './src/chrome/content/index',
         page: './src/chrome/content/page',
         inject: './src/chrome/content/inject',
+        panel: './src/app/index'
     },
     output: {
         filename: '[name].bundle.js',
@@ -27,7 +28,11 @@ module.exports = {
             {
                 test: /\.tsx?$/,
                 use: ['awesome-typescript-loader']
-            }
+            },
+            { // for svg
+                test: /\.(svg?)(\?[a-z0-9]+)?$/,
+                use: ['url-loader']
+            },
         ]
     },
     plugins: [
