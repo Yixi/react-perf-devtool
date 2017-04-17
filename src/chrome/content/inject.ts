@@ -12,6 +12,13 @@ if (!Perf) {
 
 } else {
 
+    window.postMessage({
+        type: MESSAGE_TYPE.FROM_PAGE,
+        payload: {
+            message: MESSAGE.DETECTED_PERF
+        }
+    }, '*')
+
 //     console.log('Pef.start');
 //     Perf.start();
 //

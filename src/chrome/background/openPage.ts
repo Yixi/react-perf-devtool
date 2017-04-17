@@ -9,7 +9,7 @@ export default function openPage(menuId: string) {
     let url: string;
     switch (menuId) {
         case 'open-panel':
-            url = chrome.extension.getURL('window.html');
+            url = chrome.runtime.getURL('window.html');
             break;
     }
 
