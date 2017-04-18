@@ -1,5 +1,7 @@
 import {MESSAGE, MESSAGE_TYPE} from "../../app/constant";
 
+let havePerf:boolean = false;
+
 function sendMessageToBackground(payload: {message: string}) {
     chrome.runtime.sendMessage({
         type: MESSAGE_TYPE.FROM_CONTENT_SCRIPT,
@@ -15,6 +17,7 @@ window.addEventListener('message', event => {
             case MESSAGE.NON_PERF:
                 break;
             case MESSAGE.DETECTED_PERF:
+                havePerf = true;
                 sendMessageToBackground({
                     message: MESSAGE.DETECTED_PERF
                 });
@@ -23,3 +26,15 @@ window.addEventListener('message', event => {
     }
 });
 
+chrome.runtime.onMessage.addListener((request) => {
+    if (request.type && request.type === MESSAGE_TYPE.FROM_DEV_WINDOW) {
+        //message from panel
+        switch (request.payload.message) {
+            case MESSAGE.GET_PAGE_STATUE:
+                if (havePerf) {
+                    sendMessageToBackground({message: MESSAGE.DETECTED_PERF});
+                }
+                break;
+        }
+    }
+});
