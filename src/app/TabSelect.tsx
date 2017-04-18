@@ -12,12 +12,19 @@ interface TabSelectProps {
 @inject('tabsStore')
 @observer
 class TabSelect extends React.Component<TabSelectProps, {}> {
+
+    handleChange = (event: React.SyntheticEvent<EventTarget> , index: number, value: number) => {
+        this.props.tabsStore.chooseTab(value);
+    };
+
     render() {
         let {tabsStore} = this.props;
         return (
-            <DropDownMenu>
-                {tabsStore.tabs.map(tab => <MenuItem value={tab.id} primaryText={tab.title} key={tab.id}/>)}
-            </DropDownMenu>
+            <div>
+                <DropDownMenu onChange={this.handleChange} value={tabsStore.currentTabId}>
+                    {tabsStore.tabs.map(tab => <MenuItem value={tab.id} primaryText={tab.title} key={tab.id}/>)}
+                </DropDownMenu>
+            </div>
         );
     }
 }
