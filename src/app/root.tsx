@@ -3,6 +3,7 @@ import {inject, observer} from 'mobx-react';
 import TabSelect from './TabSelect';
 import {TabsStore} from "./store/tabsStore";
 import Action from './action';
+import Capture from './capture';
 
 interface rootProps {
     tabsStore?: TabsStore
@@ -17,6 +18,7 @@ export default class Root extends React.Component<rootProps, {}> {
             <div>
                 <TabSelect />
                 {tabsStore.currentTab && <Action tabId={tabsStore.currentTabId}/>}
+                {tabsStore.currentTab && <Capture/>}
             </div>
         );
     }
